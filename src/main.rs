@@ -19,18 +19,18 @@ use std::cmp::Ordering;
 
 #[derive(Debug)]
 pub struct Job {
-    pub length: i32,
-    pub weight: i32,
-    pub priority: i32,
+    pub length: i64,
+    pub weight: i64,
+    pub priority: i64,
 }
 
 impl Job {
 
-    pub fn new(weight: i32, len: i32, priority: i32) -> Self {
+    pub fn new(weight: i64, len: i64, priority: i64) -> Self {
             Job { length: len, weight: weight, priority: priority }
     }
 
-    pub fn set_priority(&mut self, new_pri: i32) {
+    pub fn set_priority(&mut self, new_pri: i64) {
         self.priority = new_pri;
 
     }
@@ -109,7 +109,7 @@ fn main() {
     for line in reader.lines() {
 		_count += 1;	
 		let line_data = line.unwrap();
-        println!("processing {}",line_data);
+  //      println!("processing {}",line_data);
 
         // split the line into the vertex and the list of adjacent vertexes/weight pairs
         let re_job = Regex::new(r"\s*(?P<weight>\d+)\s+(?P<length>\d+.*$)").unwrap();
@@ -118,23 +118,23 @@ fn main() {
         let caps = re_job.captures(&line_data).unwrap();
         let text1 = caps.get(1).map_or("", |m| m.as_str());
         let text2 = caps.get(2).map_or("", |m| m.as_str());
-        println!("T1 {} T2 {}", text1, text2);
+   //     println!("T1 {} T2 {}", text1, text2);
 
-        let weight = text1.parse::<i32>().unwrap();
-        let length = text2.parse::<i32>().unwrap();
+        let weight = text1.parse::<i64>().unwrap();
+        let length = text2.parse::<i64>().unwrap();
 
         let new_job = Job::new(weight,length,weight-length);
 
-        println!("Job #{}:  {:?}",_count,new_job);
+ //       println!("Job #{}:  {:?}",_count,new_job);
         jobs.push(new_job);
     }
 
-    println!("Presort");
-    print_list(&jobs);
+    //println!("Presort");
+    //print_list(&jobs);
     jobs.sort();
     jobs.reverse();
-    println!("Final");
-    print_list(&jobs);
+    //println!("Final");
+    //print_list(&jobs);
 
 
     let mut endtime = 0;
@@ -143,7 +143,7 @@ fn main() {
         endtime += j.length;
         let wt_end = endtime * j.weight;
         sum += wt_end;
-        println!("Interim Result:  Endtime is {} Weighted endtime {}  - Sum {} ",endtime, wt_end, sum);
+//        println!("Interim Result:  Endtime is {} Weighted endtime {}  - Sum {} ",endtime, wt_end, sum);
     }
     println!("Final Difference Result:  Endtime is {} Weighted endtimes {}",endtime, sum);
 
@@ -154,7 +154,7 @@ fn main() {
     }   
     jobs.sort();
     jobs.reverse();
-    print_list(&jobs);
+    //print_list(&jobs);
 
     let mut endtime = 0;
     let mut sum = 0;
@@ -162,7 +162,7 @@ fn main() {
         endtime += j.length;
         let wt_end = endtime * j.weight;
         sum += wt_end;
-        println!("Interim Result:  Endtime is {} Weighted endtime {}  - Sum {} ",endtime, wt_end, sum);
+//        println!("Interim Result:  Endtime is {} Weighted endtime {}  - Sum {} ",endtime, wt_end, sum);
     }
     println!("Final Ratio Result:  Endtime is {} Weighted endtimes {}",endtime, sum);
     
